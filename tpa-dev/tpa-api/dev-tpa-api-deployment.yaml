@@ -7,6 +7,7 @@ metadata:
     app: tpa-api
 spec:
   replicas: 1
+  revisionHistoryLimit: 1
   selector:
     matchLabels:
       app: tpa-api
@@ -17,7 +18,7 @@ spec:
     spec:
       containers:
       - name: tpa-api
-        image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api:0.1.0
+        image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api:0.4.0
         ports:
         - containerPort: 3000
         env:

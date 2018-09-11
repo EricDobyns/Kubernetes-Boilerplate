@@ -6,7 +6,7 @@ FILE=./tpa-dev/tpa-api/dev-tpa-api-deployment.yaml
 
 # Load version
 VERSION=$(jq --arg env "$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&
-VERSION=$(echo $VERSION | tr -d '"') &&
+VERSION=$(echo $VERSION | tr -d '"')
 
 echo Deploying version: $VERSION
 

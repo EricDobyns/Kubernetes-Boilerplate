@@ -20,7 +20,7 @@ VERSION=$(echo $VERSION | tr -d '"') &&
 echo Deploying version: $VERSION &&
 
 # Update Version in deployment configuration
-sed -i '' "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
+sed -i.bak "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
 
 # Clean up all unused docker images
 docker image prune -a -f &&

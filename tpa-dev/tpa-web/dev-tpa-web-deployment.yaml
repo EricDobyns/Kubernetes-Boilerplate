@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tpa-web
+  namespace: tpa-dev
+  labels:
+    app: tpa-web
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: tpa-web
+  template:
+    metadata:
+      labels:
+        app: tpa-web
+    spec:
+      containers:
+      - name: tpa-web
+        image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web:0.1.0
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always

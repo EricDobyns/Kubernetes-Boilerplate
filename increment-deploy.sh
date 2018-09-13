@@ -1,8 +1,15 @@
 # Set Constants
-PLATFORM=tpa
-ENVIRONMENT=dev
-APPLICATION=tpa-api
-ARN=485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api
+
+#PLATFORM=tpa
+PLATFORM=$1
+#ENVIRONMENT=dev
+ENVIRONMENT=$2
+#APPLICATION=tpa-api
+APPLICATION=$3
+#ARN=485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api
+ARN=$4
+
+# Get deployment file path
 FILE=./$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
 
 # Login to AWS
@@ -26,7 +33,7 @@ sed -i.bak "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
 docker image prune -a -f &&
 
 # Create container image - TODO: Update path to dockerfile
-docker build -t ${APPLICATION} ../tmp/tpa-api/tpa_service &&
+docker build -t ${APPLICATION} ../repositories/$APPLICATION &&
 
 # Tag and upload new version of the image to AWS-ECR
 docker tag ${APPLICATION}:latest ${ARN}:latest &&

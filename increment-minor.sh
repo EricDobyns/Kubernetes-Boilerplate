@@ -1,9 +1,10 @@
 # Set Constants
-PLATFORM=tpa
-ENVIRONMENT=dev
-APPLICATION=tpa-api
-ARN=485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api
-FILE=./$PROJECT-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
+PLATFORM=$1
+ENVIRONMENT=$2
+APPLICATION=$3
+ARN=$4
+
+FILE=./$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
 
 # Load version
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json)
@@ -21,5 +22,7 @@ INCREMENTED_MINOR_VERSION=$(($MINOR_VERSION + 1))
 # Concatenate updated version
 UPDATED_VERSION=$MAJOR_VERSION"."$INCREMENTED_MINOR_VERSION"."$HOTFIX_VERSION
 
+UPDATED_VERSION_OBJ={\"$APPLICATION\":\"$UPDATED_VERSION\"}
+
 # Update versions.json
-echo $(jq --arg UPDATED_VERSION $UPDATED_VERSION '."tpa-dev"."tpa-api" = $UPDATED_VERSION' versions.json) > versions.json
+echo $(jq --arg env "$PLATFORM-$ENVIRONMENT" --argjson updatedVersion $UPDATED_VERSION_OBJ '.[$env] += $updatedVersion' versions.json) > versions.json

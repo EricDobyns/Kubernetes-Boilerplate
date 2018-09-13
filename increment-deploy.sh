@@ -18,7 +18,7 @@ $(aws ecr get-login --no-include-email --region us-west-1) &&
 # TODO: Check if this version already exists in ECR and throw graceful error
 
 # Increment minor version
-sh increment-minor.sh &&
+sh increment-minor.sh $1 $2 $3 $4 &&
 
 # Load version
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&

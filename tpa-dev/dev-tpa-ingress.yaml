@@ -23,6 +23,6 @@ spec:
     http:
       paths:
       - path: /
-      backend:
-      serviceName: tpa-web
-      servicePort: 8080
+        backend:
+          serviceName: tpa-web
+          servicePort: 8080

@@ -1,9 +1,11 @@
 # Set Constants
-PLATFORM=tpa
-ENVIRONMENT=dev
-APPLICATION=tpa-api
-ARN=485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api
-FILE=./$PROJECT-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
+PLATFORM=$1
+ENVIRONMENT=$2
+APPLICATION=$3
+ARN=$4
+
+# Get deployment file path
+FILE=./$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
 
 # Load version
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&

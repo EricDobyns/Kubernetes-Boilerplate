@@ -1,12 +1,7 @@
 # Set Constants
-
-#PLATFORM=tpa
 PLATFORM=$1
-#ENVIRONMENT=dev
 ENVIRONMENT=$2
-#APPLICATION=tpa-api
 APPLICATION=$3
-#ARN=485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api
 ARN=$4
 
 # Get deployment file path

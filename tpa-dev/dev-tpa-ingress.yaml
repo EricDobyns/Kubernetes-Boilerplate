@@ -25,4 +25,4 @@ spec:
       - path: /
         backend:
           serviceName: tpa-web
-          servicePort: 8080
+          servicePort: 3001

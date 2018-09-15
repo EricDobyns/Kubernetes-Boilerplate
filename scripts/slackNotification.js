@@ -1,6 +1,6 @@
 const axios = require("axios")
 
-const SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
+const SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
 
 const type = process.argv[2];
 const title = process.argv[3];

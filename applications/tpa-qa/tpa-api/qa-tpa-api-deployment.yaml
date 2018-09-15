@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tpa-api
-  namespace: tpa-dev
+  namespace: tpa-qa
   labels:
     app: tpa-api
 spec:
@@ -18,18 +18,18 @@ spec:
     spec:
       containers:
       - name: tpa-api
-        image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api:0.52.0
+        image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api:0.53.0
         ports:
         - containerPort: 3000
         env:
           - name: TARGET_ENV
-            value: "dev"
+            value: "qa"
           - name: PORT
             value: "3000"
           - name: JWT_KEY
             value: "C974524D-59B3-497A-B84F-D2145B0E93A5"
           - name: PG_DB
-            value: "tpa_dev"
+            value: "tpa_qa"
           - name: PG_PORT
             value: "5432"
           - name: PG_HOST
@@ -39,7 +39,7 @@ spec:
           - name: PG_PASS
             value: "Password3"
           - name: MONGO_DB
-            value: "tpa_dev"
+            value: "tpa_qa"
           - name: MONGO_HOST
             value: "dev-db.hotbdev.com"
           - name: MONGO_PORT

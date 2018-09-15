@@ -1,0 +1,27 @@
+{
+	"name": "hotb-kubernetes",
+	"version": "0.1.0",
+	"description": "",
+	"keywords": [],
+	"license": "UNLICENSED",
+	"repository": {
+		"bitbucket": ""
+	},
+	"private": true,
+	"contributors": [
+		"Eric Dobyns <edobyns@hotbsoftware.com>"
+	],
+	"scripts": {
+		"deploy:all": "sh scripts/deploy_all.sh"
+	},
+	"dependencies": {},
+	"devDependencies": {},
+	"engines": {
+		"node": ">=8.11.4",
+		"npm": ">=5.6.0"
+	},
+	"os": [
+		"darwin",
+		"linux"
+	]
+}

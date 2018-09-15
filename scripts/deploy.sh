@@ -1,11 +1,13 @@
-# Set Constants
+#!/bin/sh
+
+# Set local constants
 PLATFORM=$1
 ENVIRONMENT=$2
 APPLICATION=$3
 ARN=$4
 
 # Get deployment file path
-FILE=./$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
+FILE=./applications/$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
 
 # Load version
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&

@@ -14,7 +14,9 @@
 	"scripts": {
 		"deploy:all": "sh scripts/deploy_all.sh"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"axios": "^0.18.0"
+	},
 	"devDependencies": {},
 	"engines": {
 		"node": ">=8.11.4",

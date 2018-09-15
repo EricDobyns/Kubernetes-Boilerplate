@@ -2,6 +2,7 @@
 
 # Set global constants
 WORKSPACE_DIR=/Users/macbookpro/Dock/Repositories/HOTBSoftware/DevOps/workspaces
+KUBERNETES_CONFIG_DIR=/Users/macbookpro/Dock/Repositories/HOTBSoftware/DevOps/hotb-kubernetes
 
 # Set local constants
 PLATFORM=$1
@@ -24,8 +25,6 @@ sh scripts/increment-minor.sh $1 $2 $3 &&
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&
 VERSION=$(echo $VERSION | tr -d '"') &&
 
-echo Deploying version: $VERSION &&
-
 # Update Version in deployment configuration
 sed -i.bak "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
 rm -rf ${FILE}.bak
@@ -45,4 +44,16 @@ docker push ${ARN}:${VERSION} &&
 # Update deployment
 kubectl apply -f "${FILE}" &&
 
-echo Deployment complete.
+## Notification Steps
+# Navigate to the applications directory
+cd ${WORKSPACE_DIR}/${APPLICATION}
+
+# Get the last commit log
+logs=$(git log -1 --pretty=%B origin/staging)
+
+# Navigate to the original directory
+cd ${KUBERNETES_CONFIG_DIR}
+
+# Send Slack notification
+url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com
+node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs"

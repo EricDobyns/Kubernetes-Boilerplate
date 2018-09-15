@@ -16,7 +16,8 @@ VERSION=$(echo $VERSION | tr -d '"')
 echo Deploying version: $VERSION
 
 # Update version in deployment configuration
-sed -i '' "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
+sed -i.bak "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
+rm -rf ${FILE}.bak
 
 # Update deployment
 kubectl apply -f "${FILE}" &&

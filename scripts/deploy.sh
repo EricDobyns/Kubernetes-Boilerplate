@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Set global constants
-WORKSPACE_DIR=/Users/macbookpro/Dock/Repositories/HOTBSoftware/DevOps/workspaces
-KUBERNETES_CONFIG_DIR=/Users/macbookpro/Dock/Repositories/HOTBSoftware/DevOps/hotb-kubernetes
+WORKSPACE_DIR=/home/ec2-user/workspaces
+KUBERNETES_CONFIG_DIR=/home/ec2-user/hotb-kubernetes
 
 # Set local constants
 PLATFORM=$1

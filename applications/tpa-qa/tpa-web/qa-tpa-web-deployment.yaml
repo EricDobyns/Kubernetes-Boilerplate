@@ -23,5 +23,5 @@ spec:
         - containerPort: 3000
         env:
           - name: API_URL
-            value: "https://dev-tpa-api.hotbdev.com"        
+            value: "https://qa-tpa-api.hotbdev.com"        
       restartPolicy: Always

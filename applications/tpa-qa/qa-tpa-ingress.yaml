@@ -19,3 +19,10 @@ spec:
         backend:
           serviceName: tpa-api
           servicePort: 3000
+  - host: qa-tpa-web.hotbdev.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: tpa-web
+          servicePort: 3000          

@@ -14,12 +14,8 @@ if (type == "SUCCESS") {
 		attachments: [
 			{
 				color: "#7CD197",
-				fields: [
-					{
-						title: null,
-						value: title,
-						short: false
-					},					
+				text: title,
+				fields: [				
 					{
 						title: null,
 						value: url,

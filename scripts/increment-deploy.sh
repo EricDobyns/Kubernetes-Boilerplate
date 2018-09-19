@@ -32,7 +32,7 @@ rm -rf ${FILE}.bak
 # Clean up all unused docker images
 docker image prune -a -f &&
 
-# Create container image - TODO: Update path to dockerfile
+# Create container image
 docker build -t ${APPLICATION} ${WORKSPACE_DIR}/$APPLICATION &&
 
 # Tag and upload new version of the image to AWS-ECR
@@ -57,3 +57,9 @@ cd ${KUBERNETES_CONFIG_DIR}
 # Send Slack notification
 url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com
 node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs"
+
+# Remove all docker containers
+docker rm -f $(docker ps -a -q)
+
+# Prune docker images
+docker images -aq | grep -v $(docker images -q --filter='reference=node') | xargs docker image rm -f

@@ -11,7 +11,7 @@ APPLICATION=$3
 ARN=$4
 
 # Get deployment file path
-FILE=./applications/$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
+FILE=${KUBERNETES_CONFIG_DIR}/applications/$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
 
 # Load version
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&
@@ -27,9 +27,6 @@ kubectl apply -f "${FILE}"
 ## Notification Steps
 # Navigate to the applications directory
 cd ${WORKSPACE_DIR}/${APPLICATION}
-
-# Update Version in package.json
-jq ".version = \"${VERSION}\"" package.json > package.json.tmp && mv package.json.tmp package.json
 
 # Get the last commit log
 logs=$(git log -1 --pretty=%B origin/staging)

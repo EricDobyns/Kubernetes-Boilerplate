@@ -11,7 +11,7 @@ APPLICATION=$3
 ARN=$4
 
 # Get deployment file path
-FILE=./applications/$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
+FILE=${KUBERNETES_CONFIG_DIR}/applications/$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
 
 # Login to AWS
 $(aws ecr get-login --no-include-email --region us-west-1) &&
@@ -27,10 +27,13 @@ VERSION=$(echo $VERSION | tr -d '"') &&
 
 # Update Version in deployment configuration
 sed -i.bak "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
-rm -rf ${FILE}.bak
+rm -rf ${FILE}.bak &&
 
-# Clean up all unused docker images
-docker image prune -a -f &&
+# Navigate to the applications directory
+cd ${WORKSPACE_DIR}/${APPLICATION} &&
+
+# Update Version in package.json
+jq ".version = \"${VERSION}\"" package.json > package.json.tmp && mv package.json.tmp package.json &&
 
 # Create container image
 docker build -t ${APPLICATION} ${WORKSPACE_DIR}/$APPLICATION &&
@@ -44,25 +47,20 @@ docker push ${ARN}:${VERSION} &&
 # Update deployment
 kubectl apply -f "${FILE}" &&
 
-## Notification Steps
-# Navigate to the applications directory
-cd ${WORKSPACE_DIR}/${APPLICATION}
-
-# Update Version in package.json
-jq ".version = \"${VERSION}\"" package.json > package.json.tmp && mv package.json.tmp package.json
-
 # Get the last commit log
-logs=$(git log -1 --pretty=%B origin/staging)
+logs=$(git log -1 --pretty=%B origin/staging) &&
 
 # Navigate to the original directory
-cd ${KUBERNETES_CONFIG_DIR}
+cd ${KUBERNETES_CONFIG_DIR} &&
 
 # Send Slack notification
-url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com
-node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs"
+url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com &&
+node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs" &&
 
 # Remove all docker containers
-docker rm -f $(docker ps -a -q)
+docker rm -f $(docker ps -a -q) &&
 
 # Prune docker images
-docker images -aq | grep -v $(docker images -q --filter='reference=node') | xargs docker image rm -f
+docker images -aq | grep -v $(docker images -q --filter='reference=node') | xargs docker image rm -f &&
+
+echo Script increment-deploy.sh completed

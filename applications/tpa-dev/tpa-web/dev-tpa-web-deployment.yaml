@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: tpa-web
-        image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web:0.34.0
+        image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web:0.35.0
         ports:
         - containerPort: 3000
         env:

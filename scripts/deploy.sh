@@ -28,12 +28,16 @@ kubectl apply -f "${FILE}"
 # Navigate to the applications directory
 cd ${WORKSPACE_DIR}/${APPLICATION}
 
+# Update Version in package.json
+jq ".version = \"${VERSION}\"" package.json > package.json.tmp && mv package.json.tmp package.json
+
 # Get the last commit log
 logs=$(git log -1 --pretty=%B origin/staging)
 
 # Navigate to the original directory
 cd ${KUBERNETES_CONFIG_DIR}
 
+# DISABLED
 # Send Slack notification
-url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com
-node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs"
+#url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com
+#node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs"

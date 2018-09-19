@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tpa-web
-  namespace: tpa-dev
+  namespace: tpa-qa
   labels:
     app: tpa-web
 spec:
@@ -23,5 +23,5 @@ spec:
         - containerPort: 3000
         env:
           - name: API_URL
-            value: "https://qa-tpa-api.hotbdev.com"        
+            value: "https://qa-tpa-api.hotbdev.com/api/v1"        
       restartPolicy: Always

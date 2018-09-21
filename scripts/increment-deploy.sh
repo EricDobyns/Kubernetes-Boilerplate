@@ -49,6 +49,9 @@ logs=$(git log -1 --pretty=%B origin/staging) &&
 # Navigate to the original directory
 cd ${KUBERNETES_CONFIG_DIR} &&
 
+# Pause 90 seconds for readinessProbe to finish
+sleep 90 &&
+
 # Send Slack notification
 url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com &&
 node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs" &&

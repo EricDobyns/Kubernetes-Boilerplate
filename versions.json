@@ -1,1 +1,1 @@
-{ "tpa-dev": { "tpa-api": "0.99.0", "tpa-web": "0.35.0" }, "tpa-qa": { "tpa-api": "0.99.0", "tpa-web": "0.37.0" }, "tpa-staging": { "tpa-api": "0.99.0", "tpa-web": "0.37.0" } }
+{ "tpa-dev": { "tpa-api": "0.99.0", "tpa-web": "0.37.0" }, "tpa-qa": { "tpa-api": "0.99.0", "tpa-web": "0.37.0" }, "tpa-staging": { "tpa-api": "0.99.0", "tpa-web": "0.37.0" } }

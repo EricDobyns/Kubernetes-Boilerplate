@@ -17,16 +17,14 @@ FILE=${KUBERNETES_CONFIG_DIR}/applications/$PLATFORM-$ENVIRONMENT/$APPLICATION/$
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&
 VERSION=$(echo $VERSION | tr -d '"')
 
-# Update version in deployment configuration
-sed -i.bak "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
-rm -rf ${FILE}.bak
-
-# Update deployment
-kubectl rolling-update ${APPLICATION} -f "${FILE}"
-
-## Notification Steps
 # Navigate to the applications directory
 cd ${WORKSPACE_DIR}/${APPLICATION}
+
+# Update Version in package.json
+jq ".version = \"${VERSION}\"" package.json > package.json.tmp && mv package.json.tmp package.json &&
+
+# Update deployment
+kubectl set image deployment/${APPLICATION} ${APPLICATION}=${ARN}:${VERSION}
 
 # Get the last commit log
 logs=$(git log -1 --pretty=%B origin/staging)

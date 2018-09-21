@@ -25,10 +25,6 @@ sh scripts/increment-minor.sh $1 $2 $3 &&
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&
 VERSION=$(echo $VERSION | tr -d '"') &&
 
-# Update Version in deployment configuration
-sed -i.bak "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
-rm -rf ${FILE}.bak &&
-
 # Navigate to the applications directory
 cd ${WORKSPACE_DIR}/${APPLICATION} &&
 
@@ -45,7 +41,7 @@ docker tag ${APPLICATION}:latest ${ARN}:${VERSION} &&
 docker push ${ARN}:${VERSION} &&
 
 # Update deployment
-kubectl apply -f "${FILE}" &&
+kubectl set image deployment/${APPLICATION} ${APPLICATION}=${ARN}:${VERSION}
 
 # Get the last commit log
 logs=$(git log -1 --pretty=%B origin/staging) &&

@@ -24,7 +24,7 @@ cd ${WORKSPACE_DIR}/${APPLICATION}
 jq ".version = \"${VERSION}\"" package.json > package.json.tmp && mv package.json.tmp package.json &&
 
 # Update deployment
-kubectl set image deployment/${APPLICATION} ${APPLICATION}=${ARN}:${VERSION}
+kubectl set image deployment/${APPLICATION} ${APPLICATION}=${ARN}:${VERSION} -n ${PLATFORM}-${ENVIRONMENT}
 
 # Get the last commit log
 logs=$(git log -1 --pretty=%B origin/staging)

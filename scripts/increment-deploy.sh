@@ -41,7 +41,7 @@ docker tag ${APPLICATION}:latest ${ARN}:${VERSION} &&
 docker push ${ARN}:${VERSION} &&
 
 # Update deployment
-kubectl set image deployment/${APPLICATION} ${APPLICATION}=${ARN}:${VERSION}
+kubectl set image deployment/${APPLICATION} ${APPLICATION}=${ARN}:${VERSION} -n ${PLATFORM}-${ENVIRONMENT}
 
 # Get the last commit log
 logs=$(git log -1 --pretty=%B origin/staging) &&

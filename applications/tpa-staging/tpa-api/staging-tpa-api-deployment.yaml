@@ -11,16 +11,28 @@ spec:
   selector:
     matchLabels:
       app: tpa-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1            
   template:
     metadata:
       labels:
         app: tpa-api
     spec:
+      restartPolicy: Always
       containers:
       - name: tpa-api
         image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api:0.99.0
         ports:
         - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 20
+          timeoutSeconds: 1            
         env:
           - name: TARGET_ENV
             value: "staging"
@@ -28,6 +40,8 @@ spec:
             value: "3000"
           - name: JWT_KEY
             value: "C974524D-59B3-497A-B84F-D2145B0E93A5"
+          - name: JWT_ADMIN_KEY
+            value: "AD46C45C-27B1-43DB-ACA1-606AC16BCD06"            
           - name: PG_DB
             value: "tpa_staging"
           - name: PG_PORT
@@ -52,4 +66,5 @@ spec:
             value: "AKIAJ2IETKNTQPCUO33Q"
           - name: AWS_SECRET
             value: "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"
-      restartPolicy: Always
+          - name: STRIPE_SECRET_KEY
+            value: "sk_test_KwHLzkzuv4r3n44Vof7uYqu7"            

@@ -22,7 +22,7 @@ sed -i.bak "s#${ARN}:.*#${ARN}:${VERSION}#" "${FILE}" &&
 rm -rf ${FILE}.bak
 
 # Update deployment
-kubectl apply -f "${FILE}"
+kubectl rolling-update ${APPLICATION} -f "${FILE}"
 
 ## Notification Steps
 # Navigate to the applications directory

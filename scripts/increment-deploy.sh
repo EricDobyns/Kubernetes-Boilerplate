@@ -57,9 +57,9 @@ url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com &&
 node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs" &&
 
 # Remove all docker containers
-docker rm -f $(docker ps -a -q) &&
+docker container prune -f
 
 # Prune docker images
-docker images -aq | grep -v $(docker images -q --filter='reference=node') | xargs docker image rm -f &&
+docker images -aq | grep -v "$(docker images -q --filter='reference=node')" | xargs docker image rm -f &&
 
 echo Script increment-deploy.sh completed

@@ -37,4 +37,4 @@ spec:
           - name: API_URL
             value: "https://staging-tpa-api.hotbdev.com/api/v1"        
           - name: STRIPE_PUBLISHABLE_KEY
-            value: "sk_test_KwHLzkzuv4r3n44Vof7uYqu7"            
+            value: "pk_test_QZQrjkY6OjppFVPtFqfigjx9"

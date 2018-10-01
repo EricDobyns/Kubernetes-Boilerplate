@@ -10,4 +10,8 @@ sh scripts/deploy.sh tpa staging tpa-api 485490441211.dkr.ecr.us-west-1.amazonaw
 
 sh scripts/deploy.sh tpa dev tpa-web 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web &&
 sh scripts/deploy.sh tpa qa tpa-web 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web &&
-sh scripts/deploy.sh tpa staging tpa-web 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web
+sh scripts/deploy.sh tpa staging tpa-web 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web &&
+
+sh scripts/deploy.sh tpa dev tpa-admin 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-admin &&
+sh scripts/deploy.sh tpa qa tpa-admin 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-admin &&
+sh scripts/deploy.sh tpa staging tpa-admin 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-admin

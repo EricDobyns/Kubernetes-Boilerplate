@@ -24,7 +24,7 @@ spec:
       restartPolicy: Always    
       containers:
       - name: tpa-web
-        image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web:0.37.0
+        image: 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web:0.46.0
         ports:
         - containerPort: 3000
         readinessProbe:

@@ -1,17 +1,18 @@
 #!/bin/sh
 
-# Set global constants
-WORKSPACE_DIR=/home/ec2-user/workspaces
-KUBERNETES_CONFIG_DIR=/home/ec2-user/hotb-kubernetes
+# Set hard constants
+WORKSPACE_DIR=
+KUBERNETES_CONFIG_DIR=
+DOMAIN_NAME=
 
-# Set local constants
+# Import constants
 PLATFORM=$1
 ENVIRONMENT=$2
 APPLICATION=$3
 ARN=$4
 
 # Get deployment file path
-FILE=${KUBERNETES_CONFIG_DIR}/applications/$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
+FILE=${KUBERNETES_CONFIG_DIR}/application-scripts/$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
 
 # Load version
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&
@@ -32,7 +33,7 @@ logs=$(git log -1 --pretty=%B origin/staging)
 # Navigate to the original directory
 cd ${KUBERNETES_CONFIG_DIR}
 
-# DISABLED
+# DISABLED - Uncomment if needed
 # Send Slack notification
-#url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com
-#node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs"
+# url=https://$ENVIRONMENT-$APPLICATION.$DOMAIN_NAME.com
+# node deployment-scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs"

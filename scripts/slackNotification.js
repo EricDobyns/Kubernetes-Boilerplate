@@ -1,13 +1,16 @@
 const axios = require("axios")
 
-const SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
+// Set hard constants
+const SLACK_WEBHOOK_URL = ""
 
+// Import constants
 const type = process.argv[2];
 const title = process.argv[3];
 const url = process.argv[4];
 const logs = process.argv[5];
 const currentDate = new Date()
 
+// Create payload
 let payload;
 if (type == "SUCCESS") {
 	payload = {
@@ -36,6 +39,7 @@ if (type == "SUCCESS") {
 	console.log("TODO: Add formatted message for failed builds")
 }
 
+// Send Slack Notification
 axios.default.post(SLACK_WEBHOOK_URL, payload)
 .then(data => {
 	console.log(data)

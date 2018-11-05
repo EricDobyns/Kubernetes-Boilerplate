@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: projectname-web
+  namespace: projectname-staging
+  labels:
+    app: projectname-web
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: projectname-web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1      
+  template:
+    metadata:
+      labels:
+        app: projectname-web
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: projectname-web
+        image: <insert aws ecr repository arn>:0.1.0
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 90
+          timeoutSeconds: 1        
+        env:
+          - name: API_URL
+            value: ""        
+

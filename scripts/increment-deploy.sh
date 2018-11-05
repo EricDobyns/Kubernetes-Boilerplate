@@ -1,17 +1,18 @@
 #!/bin/sh
 
-# Set global constants
-WORKSPACE_DIR=/home/ec2-user/workspaces
-KUBERNETES_CONFIG_DIR=/home/ec2-user/hotb-kubernetes
+# Set hard constants
+WORKSPACE_DIR=
+KUBERNETES_CONFIG_DIR=
+DOMAIN_NAME=
 
-# Set local constants
+# Import constants
 PLATFORM=$1
 ENVIRONMENT=$2
 APPLICATION=$3
 ARN=$4
 
 # Get deployment file path
-FILE=${KUBERNETES_CONFIG_DIR}/applications/$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
+FILE=${KUBERNETES_CONFIG_DIR}/application-scripts/$PLATFORM-$ENVIRONMENT/$APPLICATION/$ENVIRONMENT-$APPLICATION-deployment.yaml
 
 # Login to AWS
 $(aws ecr get-login --no-include-email --region us-west-1) &&
@@ -19,7 +20,7 @@ $(aws ecr get-login --no-include-email --region us-west-1) &&
 # TODO: Check if this version already exists in ECR and throw graceful error
 
 # Increment minor version
-sh scripts/increment-minor.sh $1 $2 $3 &&
+sh deployment-scripts/increment-minor.sh $1 $2 $3 &&
 
 # Load version
 VERSION=$(jq --arg env "$PLATFORM-$ENVIRONMENT" --arg app "$APPLICATION" '.[$env] | .[$app]' versions.json) &&
@@ -53,8 +54,8 @@ cd ${KUBERNETES_CONFIG_DIR} &&
 sleep 90 &&
 
 # Send Slack notification
-url=https://$ENVIRONMENT-$APPLICATION.hotbdev.com &&
-node scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs" &&
+url=https://$ENVIRONMENT-$APPLICATION.$DOMAIN_NAME.com &&
+node deployment-scripts/slackNotification.js "SUCCESS" "*New Build:   $APPLICATION - v$VERSION - $ENVIRONMENT*" "*Link*: $url" "$logs" &&
 
 # Remove all docker containers
 docker container prune -f

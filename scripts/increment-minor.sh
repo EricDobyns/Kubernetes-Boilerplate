@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Set local constants
+# Import constants
 PLATFORM=$1
 ENVIRONMENT=$2
 APPLICATION=$3

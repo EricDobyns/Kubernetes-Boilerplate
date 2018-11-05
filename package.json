@@ -1,7 +1,7 @@
 {
-	"name": "hotb-kubernetes",
+	"name": "kubernetes-scripts",
 	"version": "0.1.0",
-	"description": "",
+	"description": "General kubernetes scripts",
 	"keywords": [],
 	"license": "UNLICENSED",
 	"repository": {

@@ -4,14 +4,7 @@
 # NOTE: Scripts must be run from the project's root directory (up one folder from here)
 
 # Run command for each application in each environment (Refactor this)
-sh scripts/deploy.sh tpa dev tpa-api 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api &&
-sh scripts/deploy.sh tpa qa tpa-api 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api &&
-sh scripts/deploy.sh tpa staging tpa-api 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api &&
+# sh deployment-scripts/deploy.sh <insert platform name> <insert environment> <insert project name> <insert ecr url>
 
-sh scripts/deploy.sh tpa dev tpa-web 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web &&
-sh scripts/deploy.sh tpa qa tpa-web 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web &&
-sh scripts/deploy.sh tpa staging tpa-web 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-web &&
-
-sh scripts/deploy.sh tpa dev tpa-admin 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-admin &&
-sh scripts/deploy.sh tpa qa tpa-admin 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-admin &&
-sh scripts/deploy.sh tpa staging tpa-admin 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-admin
+# Example:
+# sh deployment-scripts/deploy.sh tpa dev tpa-api 485490441211.dkr.ecr.us-west-1.amazonaws.com/tpa-api

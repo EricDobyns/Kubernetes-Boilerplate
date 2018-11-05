@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: projectname-api
+  namespace: projectname-staging
+  labels:
+    app: projectname-api
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: projectname-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: projectname-api
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: projectname-api
+        image: <insert aws ecr repository arn>:0.1.0
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 20
+          timeoutSeconds: 1
+        env:
+          - name: TARGET_ENV
+            value: "staging"
+          - name: PORT
+            value: "3000"

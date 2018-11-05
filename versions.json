@@ -1,17 +1,18 @@
 {
-	"tpa-dev": {
-		"tpa-api": "0.133.0",
-		"tpa-web": "0.64.0",
-		"tpa-admin": "0.0.0"
+	"projectname-dev": {
+		"projectname-api": "0.1.0",
+		"projectname-web": "0.1.0"
 	},
-	"tpa-qa": {
-		"tpa-api": "0.133.0",
-		"tpa-web": "0.64.0",
-		"tpa-admin": "0.0.0"
+	"projectname-qa": {
+		"projectname-api": "0.1.0",
+		"projectname-web": "0.1.0"
 	},
-	"tpa-staging": {
-		"tpa-api": "0.133.0",
-		"tpa-web": "0.64.0",
-		"tpa-admin": "0.0.0"
+	"projectname-staging": {
+		"projectname-api": "0.1.0",
+		"projectname-web": "0.1.0"
+	},
+	"projectname-production": {
+		"projectname-api": "0.1.0",
+		"projectname-web": "0.1.0"
 	}
 }
